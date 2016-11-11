@@ -1,0 +1,74 @@
+<html>
+<head>
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+    function isPermutation(str1, str2){
+      if (str1.length !== str2.length)
+        return false;
+        // if they're not the same, length, they can't be permutations of each other so no point going on
+      var holder = str2
+      var changeableString = ''
+      // the above two variables I created so I could change str2, the first one is static in the inner loop, only being reset to equal changeableString string at the end of the big loop's iteration, changeableString however, I created so that I will add all characters from holder to it for each iteration, EXCEPT any character that matches str1[i], that I skip the characters of str2 that have already been matched. otherwise str1 of 'sister' would be returned as true compared against 'sirter' even though it has 2 s's and str2 only has 1. the either s in str1 would match the first s in str2, if we didn't take it out.
+      var count = 0;
+      for (var i = 0; i < str1.length; i++){
+        var ifNothingMatched = true;
+        for (var x = 0; x < holder.length; x++){
+          if (ifNothingMatched == true){
+            if (str1[i] !== holder[x]){
+              changeableString += holder[x]
+            } else{
+              count ++;
+              ifNothingMatched = false;
+            }
+          } else {
+            changeableString += holder[x]
+          }
+        }
+        if(ifNothingMatched == true)
+          return false;
+          // if i of str1 never matched anything from holder (which has any character that does match str[i] taken out for each respective iteration), then there're not true permutations so I just return false
+        holder = changeableString;
+        changeableString = '';
+      }
+      return count==str1.length ? true : false;
+    }
+    console.log(isPermutation('mister','stimer'))
+    console.log(isPermutation('mister','sister'))
+
+    function isPangram(str){
+      if(str.length < 26)
+        return false;
+      var strL = str.toLowerCase();
+      var alph = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l','m','n','o','p','q','r','s','t','u','v','w','x','y', 'z'];
+      for (var i = 0; i < strL.length; i++){
+        for (var x = 0; x < alph.length; x++){
+          if (strL[i] == alph[x]){
+            if (alph.length == 1)
+              return true;
+            alph.splice(x, 1);
+            break;
+          }
+        }
+      }
+      return false;
+    }
+    console.log(isPangram('How quickly daft jumping zebras vex!'))
+    console.log(isPangram('abcdef ghijkl mno pqrs tuv wxy, not so fast!'))
+
+
+  });
+
+
+
+  $(function(){
+    // or here, pick one.
+  });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
