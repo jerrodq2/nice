@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="angular/angular.js" charset="utf-8"></script>
+    <!-- End Bower Components -->
+    <script type="text/javascript">
+      var app = angular.module('myApp', [])
+      console.log('Here')
+      app.factory('registrationFactory', ['$http', function($http){
+            var factory = {};
+            factory.reg = function(user) {
+              $http.post('/', user).then(function(success, error){
+                if (error) {
+                  console.log(error);
+                }
+                else {
+                  console.log(success);
+                }
+              })
+            }
+            factory.login= function(user){
+              $http.post('/login', user).then(function(success){
+                if(success.data.error){
+                  console.log(success.data.error)
+                } else {
+                  console.log(success.data.message)
+                }
+              })
+            }
+        return factory
+      }])
+
+      app.controller('registrationController', ['$scope', 'registrationFactory', function($scope, registrationFactory){
+        $scope.reg =function(){
+          registrationFactory.reg($scope.user)
+        }
+        $scope.login=function(){
+          registrationFactory.login($scope.check)
+        }
+      }])
+    </script>
+
+  </head>
+  <body ng-controller='registrationController'>
+    <form >
+      First Name: <input type="text" name="name" ng-model='user.name'>
+      email: <input type="email" name="name" ng-model='user.email'>
+      Password: <input type="password" name="name" ng-model='user.password'>
+      <input type="submit" ng-click='reg()' value="Submit">
+      <hr>
+      <form>
+        Email: <input type="email" name="name" ng-model='check.email'>
+        Password: <input type="password" ng-model='check.password'>
+        <input type="submit" ng-click='login()' value="Login">
+      </form>
+    </form>
+  </body>
+</html>
