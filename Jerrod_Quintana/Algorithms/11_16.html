@@ -1,0 +1,105 @@
+<html>
+<head>
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+
+    BST.prototype.remove = function(){
+      var current = this.root;
+      if(!current){
+        return false;
+      }
+      // this may not work if the root node has the value
+      var previous = current;
+      while(current){
+        if(current.val == val){
+
+          // START OF IF WE FOUND THE NODE THAT HAS OUR VALUE
+          // The if statement below are for specific cases of what the node we want to remove might be
+          if(current.right == null && current.left){
+            // this if statement is if the node has no .left or .right, meaning no child nodes
+            if(previous.val > current.val){
+              // Then we're on the left side of our parent
+              previous.left == null;
+            } else{
+              prvious.right == null;
+            }
+          }
+
+          else if(current.right == null || current.left){
+            // then the node we want to remove is only pointing to one node, or only has one child
+            if(previous.val > val){
+              // then we're on the left side of our parent
+              if(current.left == null){
+                // Then the node we want to remove has a it's .right pointing to the node
+                previous.left == current.rigth;
+              } else {
+                previous.left = current.left
+              }
+            } else{
+              // We're on the right side of our parent
+              if(current.left == null){
+                previous.right = current.right;
+              } else {
+                previous.right = current.left;
+              }
+            }
+          }
+
+          // THE TWO BELOW CONDITIONALS ARE FOR IF WE FOUND THE NODE WE WANT TO REMOVE BUT IT HAS 2 CHILD NODES OR IT IS POINTING TO TWO NODES
+
+          else if(previous.left == current){
+            // then we are on the left side of our parent node
+            var temp = current.left;  //holds onto our child node
+            previous.left = current.right; //points to our right child node, which if we're on the left side of the BST, would be a closer number to our parent so logically should be next in the BST after our parent
+            var check = previous.left; // this is just an iterating variable which is pointing at the original node we wanted to remove's left child node, or the one that will replace it.
+            while(check){
+              if(check.left == null){
+                //we're at the end of the list, so we'll reconnect the temp node
+                check.left == temp;
+                break;
+              }
+              check = check.left;
+            }
+          }
+
+          else {
+            //we're on the right side of the parent node;
+            var temp = current.right;
+            previous.right = current.left;
+            var check= previous.right;
+            while(check){
+              if(check.right == null){
+                check.right = temp;
+                break;
+              }
+              check = check.right;
+            }
+          }
+
+          //END OF IF WE FOUND THE NODE WE WANT TO REMOVE, NOW WE JUST ITERATE
+
+        } else if(current.val > val){
+          previous = current;
+          current = current.left;
+        } else{
+          previous = current;
+          current = current.right;
+        }
+      }
+      return false;
+    }
+  });
+
+
+  $(function(){
+    // or here, pick one.
+  });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
