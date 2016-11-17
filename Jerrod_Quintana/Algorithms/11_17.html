@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+
+    BST.prototype.isVald = function(){
+      if(!this.root)
+        return false;
+      var valid = true;
+      var current = this.root;
+      var previous = current;
+      function rIsValid(curr, prev){
+        if(!curr || !valid)
+          return valid;
+        if(curr == this.root){
+        } else if(prev.right == curr){
+          // then we're on the right side of our parent, assuming no duplicates
+          if(curr.val < prev.cal){
+            valid = false;
+            return valid;
+          }
+        } else{
+          if(curr.val > prev.val){
+            valid = false;
+            return valid;
+          }
+        }
+        if(valid){
+          prev = curr;
+          rIsValid(current.right, prev);
+          rIsValid(current.left, prev);
+        }
+      }
+      return valid;  
+    }
+
+  });
+
+
+  $(function(){
+    // or here, pick one.
+  });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
