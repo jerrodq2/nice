@@ -1,0 +1,71 @@
+<html>
+<head>
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+
+    BST.prototype.isBalanced = function(){
+      //Tree is balanced if the max height of both the right and left side is equal to each other, or the difference is only one higher/lower
+      var current = this.root
+      if(!current)
+        return true
+      if(!current.right && !current.left)
+        return true //both sides are empty, they're balanced
+      if( (!current.right && current.left) || (current.right && !current.left) )
+        return false //one side is empty but the other is not, they're not balanced
+      var rightHeight = 1
+      var rightCurrent = current.right
+      var leftHeight = 1
+      var leftCurrent = current.left
+      //First we right and call the recursive function that gets the max height of the right side.
+      function recurseRight(current, cL){
+        if(!current){
+          if(cL > rightHeight){
+            rightHeight = cL
+          }
+          return
+        }
+        var temp = ++cL
+        recurse(current.left, temp)
+        recurse(current.right, temp)
+      }
+      recurse(rightCurrent.left, 1)
+      recurse(rightCurrent.right, 1)
+      //Then we write and call the funciton that gets the height of the left side of the tree, only difference between the two recursive functions, is one changes the variable rightHeight, while the other affects leftHeight
+      function recurseLeft(current, cL){
+        if(!current){
+          if(cL > leftHeight){
+            leftHeight = cL
+          }
+          return
+        }
+        var temp = ++cL
+        recurse(current.left, temp)
+        recurse(current.right, temp)
+      }
+      recurse(leftCurrent.left, 1)
+      recurse(leftCurrent.right, 1)
+    }
+    //Now we just compare the right and leftHeight
+    if( (rightHeight - 1) <= leftHeight >= (rightHeight + 1) ){
+      return true
+    } else{
+      return false
+    }
+
+
+
+  });
+
+
+  $(function(){
+    // or here, pick one.
+  });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
