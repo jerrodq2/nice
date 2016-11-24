@@ -1,0 +1,39 @@
+<html>
+<head>
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+    BST.prototype.height = function(){
+      var current = this.root
+      if(!current)
+        return 0
+      var height = 1
+      function recurse(current, cL){
+        if(!current){
+          if(cL > height){
+            height = cL
+          }
+          return
+        }
+        var temp = ++cL
+        recurse(current.left, temp)
+        recurse(current.right, temp)
+      }
+      recurse(current.left, 1)
+      recurse(current.right, 1)
+      return height
+    }
+  });
+
+
+  $(function(){
+    // or here, pick one.
+  });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
