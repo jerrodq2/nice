@@ -1,0 +1,42 @@
+<html>
+<head>
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+
+    BST.prototype.arrayToBST = function(arr){
+      if(!arr)
+        return null
+      var mid = Math.round(arr.length/2)
+      this.root = arr[mid]
+      for(var i = 0; i < arr.length; i++){
+        if(this.root == arr[i])
+          continue
+        var current = this.root
+        while(current){ //this while loop iterates through the BST, deciding which side of the tree we arr[i] goes on, and it ends when we reach an empty node, which is where we will put arr[i]
+          if(current > arr[i]){
+            current = current.right
+          } else {
+            current = current.left
+          }
+        } //end While
+        current = arr[i]
+      } //end of for loop
+      return this
+    }
+
+
+  });
+
+
+  $(function(){
+    // or here, pick one.
+  });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
