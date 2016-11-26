@@ -1,0 +1,61 @@
+<html>
+<head>
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+
+    BST.prototype.closestCommonAncestor = function(val1, val2){
+      //Pg.117 of algorithm book, it says given two contained values, so I'm assuming they want us to assume given values are always in the tree so no point in checking or checking if the BST is empty or not. i'm also goin to assume that they're are no duplicate values, as is the case with most usable BSTs
+      if(val1 > this.root && val2 < this.root){ //then they are on opposite sides of the tree so the closest comment ancestor would be the root.
+        return this.root.val
+      } else if(val1 < this.root && val2 > this.root){
+        return this.root.val
+      }
+      var current =this.root
+      var val1Ancestry = [] //i'll use these to hold all the ancestors for each val respectively, then loop through them to find the closest common one, not the most efficient way but it'll get it done
+      var val2Ancestry = []
+      while(current){
+        val1Ancestry.push(current.val) //we want to return the value of the closest ancestor and there are no duplicates
+        if(current.val == val1){
+          break //we found the first value, no ancestors for said value past this point
+        } else if(current.val > val1){ //this tells use which direction to iterate from the current node
+          current = current.left
+        } else{ //we reach this then the value is on the right side of the node, or is greater than current
+          current = current.right
+        }
+      } //end of while loop
+      current = this.root //we've found all the ancestors(including the value) for value1, so now we reset to find it for value 2
+      while(current){
+        val2Ancestry.push(current.val)
+        if(current.val == val2){
+          break
+        } else if(current.val > val2){
+          current = current.left
+        } else {
+          current = current.right
+        }
+      } //end of second while
+      for(var i = val1Ancestry.length -1; i >= 0 ; i++){ //iterate through val1's ancestry array, we want to start from the back since we added each value going down the tree to the front, so the closest common ancestor will be at the back of the arrays, otherwise we'll end up with the node after this.root which will be an ancestor at this point
+        for(var x = val2Ancestry.length -1; x >= 0; x++){
+          if(val2Ancestry[x] == val1Ancestry[i]){ //then we found our closest ancestor node
+            return val2Ancestry[x]
+          }
+        } //end of inner forloop
+      } //end of outer forloop
+    }
+
+    //not pretty but it works
+  });
+
+
+  $(function(){
+    // or here, pick one.
+  });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
